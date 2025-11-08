@@ -15,9 +15,9 @@ api:
 
 packages:
   base:  github://chrominanzky/esphome-tesla-ble/packages/base.yml
-  common: github://chrominanzky/esphome-tesla-ble/packages/common.yml
-  project: github://chrominanzky/esphome-tesla-ble/packages/project.yml
-  client: github://chrominanzky/esphome-tesla-ble/packages/client.yml
+  common: github://PedroKTFC/esphome-tesla-ble/packages/common.yml
+  project: github://PedroKTFC/esphome-tesla-ble/packages/project.yml
+  client: github://PedroKTFC/esphome-tesla-ble/packages/client.yml
   # listener: github://chrominanzky/esphome-tesla-ble/packages/listener.yml # Uncomment this to scan find your VIN BLE MAC address
 
 # The following shows how to change the name of a sensor and how to change any of the parameters.
