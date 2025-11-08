@@ -5,10 +5,13 @@ esp32_ble_tracker:
     # Activate scan only after wifi connect, see https://github.com/esphome/issues/issues/2941#issuecomment-1842369092
     continuous: false
 
-wifi:
+api:
   # Activate scan only after wifi connect, see https://github.com/esphome/issues/issues/2941#issuecomment-1842369092
-  on_connect:
+  # if Home Assistant connected → BLE-Scan start
+  on_client_connected:
     - esp32_ble_tracker.start_scan:
         continuous: true
-  on_disconnect:
+
+  # if Home Assistant connected → BLE-Scan stop
+  on_client_disconnected:
     - esp32_ble_tracker.stop_scan:
