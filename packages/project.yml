@@ -12,6 +12,6 @@ api:
     - esp32_ble_tracker.start_scan:
         continuous: true
 
-  # if Home Assistant connected → BLE-Scan stop
+  # if Home Assistant disconnected → BLE-Scan stop
   on_client_disconnected:
     - esp32_ble_tracker.stop_scan:
