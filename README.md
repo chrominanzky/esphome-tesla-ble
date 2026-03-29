@@ -92,6 +92,44 @@ There are two categories, those available even when asleep and those only when a
   - Shift state (eg Invalid, R, N, D)
   - Tyre pressures (bar). The four sensors - front left, front right, rear left, rear right - are disabled by default. 
   - Windows open/closed
+  - IEC 61851 state (A/B/C/D/E/F) - standardized charging state for EVCC integration. Disabled by default.
+
+### IEC 61851 Text Sensor
+
+The component exposes a template text sensor that maps Tesla charging states to IEC 61851 standard states:
+
+| IEC 61851 State | Meaning | Tesla Charging State |
+| --- | --- | --- |
+| A | Standby (EVSE ready, vehicle not connected) | `Disconnected` |
+| B | Vehicle detected (connected, not charging) | `Complete`, `Stopped` |
+| C | Charging (energy flowing) | `Starting`, `Charging`, `Calibrating` |
+| E | No power (connected but no power available) | `No Power` |
+| F | Error / Unknown | `Unknown` or any other state |
+
+This sensor appears as `IEC 61851` in Home Assistant (disabled by default) and is useful for integration with EVCC and other energy management systems.
+
+### EVCC Integration
+
+This component can be used with [EVCC](https://evcc.io) (Electric Vehicle Charge Controller) for solar-optimized charging. The integration provides all the entities EVCC needs:
+
+| EVCC Requirement | Entity | Platform |
+| --- | --- | --- |
+| Battery SoC | Charge level | `sensor` |
+| Charging State | Charging state | `text_sensor` |
+| IEC 61851 State | IEC 61851 | `text_sensor` |
+| Charge Current | Charge current | `sensor` |
+| Charge Power | Charge power | `sensor` |
+| Charge Voltage | Charge voltage | `sensor` |
+| Connected/Plugged In | Charge flap | `binary_sensor` |
+| Start/Stop Charging | Charger | `switch` |
+| Set Charging Amps | Charging amps | `number` |
+| Set Charging Limit | Charging limit | `number` |
+
+**Integration paths:**
+
+1. **EVCC → Home Assistant → ESPHome** (recommended): EVCC reads HA entities via the HA API. Enable the IEC 61851 sensor and configure EVCC to use the HA vehicle template.
+2. **EVCC → MQTT → ESPHome**: Add `mqtt:` to your ESPHome config and configure EVCC to use MQTT topics.
+3. **EVCC → ESPHome Web API**: Add `web_server:` to your ESPHome config and use the REST API (e.g. `http://<esp-ip>/sensor/iec61851_state`).
 
 ### Diagnostics
 
@@ -127,6 +165,7 @@ There are five number and two switch actions that allow the dynamic update of th
 - Alternatively, [M5Stack Nano C6](https://docs.m5stack.com/en/core/M5NanoC6)
 - USB-C cable to flash conveniently the M5Stack of your choice
 - [ESP32 C3 Super Mini](https://www.espboards.dev/esp32/esp32-c3-super-mini/)
+- [Olimex ESP32-PoE](https://www.olimex.com/Products/IoT/ESP32/ESP32-POE/open-source-hardware) — Ethernet/LAN board, see `boards/olimex-esp32-poe.yml`
 
 See below for build instructions for different board types.
 

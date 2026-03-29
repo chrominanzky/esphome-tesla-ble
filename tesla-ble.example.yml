@@ -56,3 +56,9 @@ packages:
 #  poll_asleep_period: 60 # Period to poll for data when asleep (s)
 #  ble_disconnected_min_time: 300 # Minimum time BLE must be disconnected before sensors are Unknown (s)
 #  fast_poll_if_unlocked: 1 # if != 0, fast polls are enabled when unlocked
+
+# EVCC Integration: The IEC 61851 text sensor is included in client.yml (disabled by default).
+# To enable it, uncomment the following:
+# text_sensor:
+#   - id: !extend iec61851_state
+#     disabled_by_default: false

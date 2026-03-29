@@ -72,6 +72,9 @@ tesla_ble_vehicle:
     name: "Reifendruck hinten links"
   tpms_pressure_rr:
     name: "Reifendruck hinten rechts"
+text_sensor:
+  - id: !extend iec61851_state
+    name: "IEC 61851"
 button:
   - id: !extend ble_pair
     name: "BLE-Schlüsselpaarung"
