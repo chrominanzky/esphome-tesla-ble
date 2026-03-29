@@ -1,11 +1,14 @@
 substitutions:
+  # Note substitutions in your yaml will override those here
   friendly_name: Tesla BLE
   device_name: tesla-ble
   device_description: Tesla BLE
-  ble_mac_address: !secret ble_mac_address
+  ble_mac_address: !secret ble_mac_address # note this and the following are mandatory and pulled from the secrets file
   tesla_vin: !secret tesla_vin
   charging_amps_max: "32"
-# The following shows the default board and variant settings. Uncomment and change them if they are not appropriate for your board:
+
+# The following shows the default board and variant settings. 
+# Uncomment and changing them is only needed if they are not appropriate for your board (see read.me documentation for support):
   #board: "esp32dev"
   #variant: "ESP32"
 
@@ -13,12 +16,28 @@ api:
   encryption:
     key: xxxxxxxxxxxxx= # use "key: !secret your_secret_key_name" for greater security
 
+# Uncomment if you want to use ethernet instead
+# See https://esphome.io/components/ethernet/ for actual configuration you will need
+# ethernet:
+#   type: LAN8720
+#   ...
+# wifi: !remove
+# sensor:
+#   - id: !remove esphome_tesla_ble_wifi_signal
+# text_sensor:
+#   - id: !remove esphome_wifi_ip_address
+# esp32_ble_tracker:
+#   scan_parameters:
+#     continuous: true
+
 packages:
-  base:  github://chrominanzky/esphome-tesla-ble/packages/base.yml
-  common: github://chrominanzky/esphome-tesla-ble/packages/common.yml
-  project: github://chrominanzky/esphome-tesla-ble/packages/project.yml
-  client: github://chrominanzky/esphome-tesla-ble/packages/client.yml
+  remote_package_files:
+    url: https://github.com/chrominanzky/esphome-tesla-ble/
+    path: packages
+    files: [base.yml, common.yml, project.yml, client.yml]
   # listener: github://chrominanzky/esphome-tesla-ble/packages/listener.yml # Uncomment this to scan find your VIN BLE MAC address
+  # language: github://chrominanzky/esphome-tesla-ble/packages/language_hu.yml # Uncomment this to translate the entity names to your language. If yours is missing, submit a PR here!
+  # language: github://chrominanzky/esphome-tesla-ble/packages/language_de.yml # Uncomment this to translate the entity names to your language. If yours is missing, submit a PR here!
 
 # The following shows how to change the name of a sensor and how to change any of the parameters.
 # tesla_ble_vehicle: # THIS LINE MUST BE UNCOMMENTED IF ANY OF THE CHANGES BELOW ARE WANTED
@@ -37,3 +56,9 @@ packages:
 #  poll_asleep_period: 60 # Period to poll for data when asleep (s)
 #  ble_disconnected_min_time: 300 # Minimum time BLE must be disconnected before sensors are Unknown (s)
 #  fast_poll_if_unlocked: 1 # if != 0, fast polls are enabled when unlocked
+
+# EVCC Integration: The IEC 61851 text sensor is included in client.yml (disabled by default).
+# To enable it, uncomment the following:
+# text_sensor:
+#   - id: !extend iec61851_state
+#     disabled_by_default: false

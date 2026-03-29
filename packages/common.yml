@@ -1,24 +1,34 @@
 sensor:
   - platform: uptime
+    id: esphome_tesla_ble_uptime
     name: "Uptime"
     update_interval: 60s
     icon: mdi:clock-outline
 
 binary_sensor:
   - platform: status
+    id: esphome_tesla_ble_status
     name: "Status"
+  - platform: ble_presence
+    id: esphome_tesla_ble_ble_status
+    mac_address: $ble_mac_address
+    device_class: connectivity
+    name: "BLE Status"
+    entity_category: diagnostic
+    timeout: $ble_presence_timeout
 
 text_sensor:
   - platform: version
+    id: esphome_tesla_ble_version
     name: "Version"
     icon: mdi:cube-outline
   - platform: ethernet_info
     ip_address:
-      name: "IP Addresse"
+      name: "IP Address"
     dns_address:
-      name: "DNS Addresse"
+      name: "DNS Address"
     mac_address:
-      name: "MAC Addresse"
+      name: "MAC Address"
 
 time:
   - platform: homeassistant
@@ -26,6 +36,7 @@ time:
 
 button:
   - platform: restart
+    id: esphome_tesla_ble_restart
     name: Restart
     icon: mdi:restart
     entity_category: diagnostic
