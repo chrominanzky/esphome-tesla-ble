@@ -5,18 +5,18 @@
 [![Last Commit][last-commit-shield]][commits]
 [![Platform][platform-shield]](https://github.com/esphome)
 
-This is a **thin LAN/Ethernet overlay** for [PedroKTFC/esphome-tesla-ble](https://github.com/PedroKTFC/esphome-tesla-ble). It replaces WiFi with Ethernet so you can use boards like the [Olimex ESP32-PoE](https://www.olimex.com/Products/IoT/ESP32/ESP32-POE/open-source-hardware).
+This is a **LAN/Ethernet overlay** for [PedroKTFC/esphome-tesla-ble](https://github.com/PedroKTFC/esphome-tesla-ble). It replaces WiFi with Ethernet so you can use boards like the [Olimex ESP32-PoE](https://www.olimex.com/Products/IoT/ESP32/ESP32-POE/open-source-hardware).
 
-**All Tesla BLE logic (C++ components, sensors, controls) comes directly from PedroKTFC and auto-updates.** This repo only contains the three small YAML files that swap WiFi for Ethernet.
+**Sensors, controls, and the listener component come directly from PedroKTFC and auto-update.** This repo additionally hosts a patched `tesla_ble_vehicle` component with improved error recovery (e.g. automatic `ERROR_INCORRECT_EPOCH` handling).
 
 ## How it works
 
 | Source | What it provides |
 | --- | --- |
-| **PedroKTFC/esphome-tesla-ble** | C++ components (`external_components`), `client.yml` (all sensors & controls), language packs, listener |
-| **This repo (chrominanzky)** | `base.yml` (no WiFi, points components to PedroKTFC), `common.yml` (ethernet_info instead of wifi_signal), `project.yml` (BLE scan via API events instead of WiFi events), `boards/olimex-esp32-poe.yml`, `evcc.yml` |
+| **PedroKTFC/esphome-tesla-ble** | `client.yml` (all sensors & controls), `tesla_ble_listener` component, language packs |
+| **This repo (chrominanzky)** | `tesla_ble_vehicle` component (patched for epoch error recovery), `base.yml`, `common.yml` (ethernet_info), `project.yml` (BLE scan via API events), `boards/olimex-esp32-poe.yml`, `evcc.yml` |
 
-When PedroKTFC releases an update (new sensors, bug fixes, etc.), **you get it automatically** — no merge needed.
+When PedroKTFC releases an update (new sensors, bug fixes, etc.), **you get it automatically** for `client.yml` and the listener component — no merge needed.
 
 ## Quick Start
 
@@ -82,8 +82,10 @@ See [`tesla-ble.example.yml`](./tesla-ble.example.yml) for a complete working ex
 ## Files in this repo
 
 ```
+components/
+  tesla_ble_vehicle/  # Patched vehicle component (epoch error recovery)
 packages/
-  base.yml        # ESPHome base config (no WiFi, external_components -> PedroKTFC)
+  base.yml        # ESPHome base config (no WiFi, external_components split)
   common.yml      # Ethernet info sensors (replaces WiFi signal sensor)
   project.yml     # BLE scan lifecycle via API events (replaces WiFi events)
   evcc.yml        # Optional IEC 61851 text sensor for EVCC

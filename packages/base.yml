@@ -4,7 +4,8 @@ substitutions:
   variant: "ESP32"
   flash_size: "4MB"
   BLE_library: "https://github.com/PedroKTFC/tesla-ble.git"
-  tesla_ble_component: "github://PedroKTFC/esphome-tesla-ble"
+  tesla_ble_vehicle_component: "github://chrominanzky/esphome-tesla-ble"
+  tesla_ble_listener_component: "github://PedroKTFC/esphome-tesla-ble"
   ble_presence_timeout: 30s
 
 esphome:
@@ -25,8 +26,11 @@ esp32:
     type: esp-idf
 
 external_components:
-  - source: $tesla_ble_component
-    components: [tesla_ble_vehicle, tesla_ble_listener]
+  - source: $tesla_ble_vehicle_component
+    components: [tesla_ble_vehicle]
+    refresh: 0s
+  - source: $tesla_ble_listener_component
+    components: [tesla_ble_listener]
     refresh: 0s
 
 logger:
