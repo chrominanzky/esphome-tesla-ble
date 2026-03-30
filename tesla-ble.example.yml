@@ -1,26 +1,25 @@
 substitutions:
-  # Note substitutions in your yaml will override those here
+  # Mandatory: Set your device name, BLE MAC and VIN
   friendly_name: Tesla BLE
-  device_name: tesla-ble
+  device_name: tesla-ble          # becomes the ESPHome node name; change to your preference
   device_description: Tesla BLE
-  ble_mac_address: !secret ble_mac_address # note this and the following are mandatory and pulled from the secrets file
+  ble_mac_address: !secret ble_mac_address
   tesla_vin: !secret tesla_vin
-  charging_amps_max: "32"
+  charging_amps_max: "32"         # max charging amps your setup supports
 
-# The following shows the default board and variant settings. 
-# Uncomment and changing them is only needed if they are not appropriate for your board (see read.me documentation for support):
+  # Board defaults – override only if your board needs different values:
   #board: "esp32dev"
   #variant: "ESP32"
 
 api:
   encryption:
-    key: xxxxxxxxxxxxx= # use "key: !secret your_secret_key_name" for greater security
+    key: !secret api_encryption_key
 
 # This is the LAN/Ethernet variant of esphome-tesla-ble.
 # WiFi is already removed in base.yml. You MUST add your Ethernet board config.
-# See https://esphome.io/components/ethernet/ for supported boards.
-# For Olimex ESP32-PoE, add to the packages section below:
-#   board: github://chrominanzky/esphome-tesla-ble/boards/olimex-esp32-poe.yml
+#
+# IMPORTANT: Do NOT add esphome:, esp32:, logger:, ota: or ethernet: blocks here.
+# They are provided by the packages below. Adding them again causes conflicts.
 
 packages:
   # LAN/Ethernet overlay – only the files that differ from upstream
@@ -35,6 +34,9 @@ packages:
     path: packages
     files: [client.yml]
     refresh: 0s
+  # Board / Ethernet config – uncomment ONE of the following or add your own:
+  board: github://chrominanzky/esphome-tesla-ble/boards/olimex-esp32-poe.yml
+  # For other boards, see https://esphome.io/components/ethernet/ and boards/ directory.
   # Uncomment for EVCC IEC 61851 text sensor (maps Tesla charging states to IEC 61851 standard)
   # evcc: github://chrominanzky/esphome-tesla-ble/packages/evcc.yml
   # listener: github://PedroKTFC/esphome-tesla-ble/packages/listener.yml # Uncomment this to scan find your VIN BLE MAC address
