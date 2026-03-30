@@ -1,3 +1,5 @@
+# Optional: IEC 61851 text sensor for EVCC integration.
+# Requires: charging_state sensor from upstream client.yml (PedroKTFC/esphome-tesla-ble)
 text_sensor:
   - platform: template
     id: iec61851_state
