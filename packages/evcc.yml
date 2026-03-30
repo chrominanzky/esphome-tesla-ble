@@ -1,0 +1,16 @@
+text_sensor:
+  - platform: template
+    id: iec61851_state
+    name: "IEC 61851"
+    icon: mdi:ev-plug-type2
+    disabled_by_default: true
+    entity_category: diagnostic
+    update_interval: 5s
+    lambda: |-
+      auto state = id(charging_state).state;
+      if (state == "Disconnected") return std::string("A");
+      if (state == "Complete" || state == "Stopped") return std::string("B");
+      if (state == "Starting" || state == "Charging" || state == "Calibrating") return std::string("C");
+      if (state == "No Power") return std::string("E");
+      if (state == "Unknown") return std::string("F");
+      return std::string("F");
