@@ -9,7 +9,7 @@ substitutions:
 
 esphome:
   project:
-    name: PedroKTFC.esphome-tesla-ble
+    name: chrominanzky.esphome-tesla-ble
     version: "2026.3.0"
   name: ${device_name}
   name_add_mac_suffix: false
@@ -27,6 +27,7 @@ esp32:
 external_components:
   - source: $tesla_ble_component
     components: [tesla_ble_vehicle, tesla_ble_listener]
+    refresh: 0s
 
 logger:
   level: INFO
