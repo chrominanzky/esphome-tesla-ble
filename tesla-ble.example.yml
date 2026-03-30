@@ -35,6 +35,7 @@ packages:
     url: https://github.com/chrominanzky/esphome-tesla-ble/
     path: packages
     files: [base.yml, common.yml, project.yml, client.yml]
+    refresh: 0s
   # listener: github://chrominanzky/esphome-tesla-ble/packages/listener.yml # Uncomment this to scan find your VIN BLE MAC address
   # language: github://chrominanzky/esphome-tesla-ble/packages/language_hu.yml # Uncomment this to translate the entity names to your language. If yours is missing, submit a PR here!
   # language: github://chrominanzky/esphome-tesla-ble/packages/language_de.yml # Uncomment this to translate the entity names to your language. If yours is missing, submit a PR here!
