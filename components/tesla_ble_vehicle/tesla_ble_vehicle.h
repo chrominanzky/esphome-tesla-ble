@@ -268,7 +268,7 @@ namespace esphome
             int ble_disconnected_min_time_;
             int fast_poll_if_unlocked_ = 1; // != 0 enables fast polling
             int max_consecutive_failures_ = 3; // 0 = disabled, otherwise reboot after N consecutive command failures
-            uint8_t consecutive_command_failures_ = 0;
+            int consecutive_command_failures_ = 0;
             int number_updates_since_connection_ = 0;
             UniversalMessage_RoutableMessage read_queue_message_;
             CarServer_Response static_carserver_response_;
