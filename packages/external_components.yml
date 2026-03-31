@@ -1,3 +1,6 @@
-- components: [tesla_ble_vehicle, tesla_ble_listener]
+- components: [tesla_ble_vehicle]
+  source: github://chrominanzky/esphome-tesla-ble
+  refresh: 0s
+- components: [tesla_ble_listener]
   source: github://PedroKTFC/esphome-tesla-ble
   refresh: 0s

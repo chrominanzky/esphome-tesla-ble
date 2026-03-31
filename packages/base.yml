@@ -25,8 +25,11 @@ esp32:
     type: esp-idf
 
 external_components:
+  - source: github://chrominanzky/esphome-tesla-ble
+    components: [tesla_ble_vehicle]
+    refresh: 0s
   - source: $tesla_ble_component
-    components: [tesla_ble_vehicle, tesla_ble_listener]
+    components: [tesla_ble_listener]
     refresh: 0s
 
 logger:
