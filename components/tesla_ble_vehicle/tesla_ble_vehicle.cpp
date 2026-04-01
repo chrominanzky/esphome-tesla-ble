@@ -106,6 +106,7 @@ namespace esphome
       if ((now - current_command.started_at) > COMMAND_TIMEOUT)
       {
         ESP_LOGW(TAG, "[%s] Command timed out after %d ms with %d commands in the queue", current_command.execute_name.c_str(), COMMAND_TIMEOUT, command_queue_.size());
+        onCommandFailed();
         command_queue_.pop();
         return;
       }
