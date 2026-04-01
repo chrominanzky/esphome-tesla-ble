@@ -60,6 +60,7 @@ packages:
 #  poll_asleep_period: 60 # Period to poll for data when asleep (s)
 #  ble_disconnected_min_time: 300 # Minimum time BLE must be disconnected before sensors are Unknown (s)
 #  fast_poll_if_unlocked: 1 # if != 0, fast polls are enabled when unlocked
+#  max_consecutive_failures: 3 # Auto-reboot ESP after N consecutive command failures (0 = disabled)
 
 # EVCC Integration: Uncomment the evcc package above to add the IEC 61851 text sensor.
 # It is disabled by default. To also enable it in Home Assistant, add:
